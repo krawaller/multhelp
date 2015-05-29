@@ -138,9 +138,9 @@ var Home = React.createClass({
                 <div className="boardbottom">
                     <span>{txt}</span>
                     <span className="input">
-                        {s.mode==="playing"?<form onSubmit={this.giveAnswer}>
+                        <form onSubmit={this.giveAnswer}>
                             <input type="number" ref="field"></input>
-                        </form>:''}
+                        </form>
                     </span>
                 </div>
             </div>

@@ -235,3 +235,10 @@ body {
   }
 }
 
+.input {
+	display: none;
+}
+
+.playing .input {
+	display: inline-block;
+}
