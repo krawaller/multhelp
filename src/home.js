@@ -133,14 +133,14 @@ var Home = React.createClass({
             },arr,this);
         },[],this);
         return (
-            <div className={"wrapper "+this.state.mode} style={data.wrapperstyles}>
+            <div className={"wrapper "+s.mode} style={data.wrapperstyles}>
                 <div className="boardface" style={data.boardstyles}>{squares}</div>
                 <div className="boardbottom">
                     <span>{txt}</span>
                     <span className="input">
-                        <form onSubmit={this.giveAnswer}>
+                        {s.mode==="playing"?<form onSubmit={this.giveAnswer}>
                             <input type="number" ref="field"></input>
-                        </form>
+                        </form>:''}
                     </span>
                 </div>
             </div>
