@@ -239,6 +239,6 @@ body {
 	display: none;
 }
 
-.playing .input {
+.playing .input, .getready .input {
 	display: inline-block;
 }
