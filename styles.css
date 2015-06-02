@@ -209,7 +209,7 @@ body {
   }
 }
 
-.didwrong .boardface {
+.didwrong .boardface, .lost .boardface {
 	animation: punish 0.15s infinite alternate;
 }
 
@@ -239,6 +239,6 @@ body {
 	display: none;
 }
 
-.playing .input, .getready .input {
+.playing .input, .getready .input, .didwrong .input {
 	display: inline-block;
 }

@@ -3,6 +3,7 @@
 var React = require('react'),
     Square = require('./square'),
     Head = require('./head'),
+    Timer = require('./timer'),
     _ = require('lodash'),
     data = require('../data');
 
@@ -49,7 +50,12 @@ var Home = React.createClass({
                 done:{},
                 remaining:_.shuffle(list)
             },function(){
-                setTimeout(this.pickNext,3000);
+                setTimeout(function(){
+                    this.setState({
+                        finishat: Date.now()+this.state.remaining.length*2000
+                    });
+                    this.pickNext();
+                }.bind(this),3000);
             }.bind(this));
         }
     },
@@ -67,11 +73,14 @@ var Home = React.createClass({
     },
     punish: function(){
         if (!this.erroring) {
-            this.setState({mode:"didwrong",remaining:_.shuffle(this.state.remaining.concat(this.state.active))});
+            this.setState({
+                mode:"didwrong",
+                //remaining:_.shuffle(this.state.remaining.concat(this.state.active))
+            });
             this.erroring = true;
             setTimeout(function(){
                 this.erroring = false;
-                this.pickNext();
+                this.setState({mode:"playing"}); //this.pickNext();
             }.bind(this),1000);
         }
     },
@@ -98,6 +107,11 @@ var Home = React.createClass({
             }
         }
     },
+    timeOut: function(time) {
+        if (this.state.mode!=="won" && time===this.state.finishat){
+            this.setState({mode:"lost"});
+        }
+    },
     render: function() {
         var s = this.state, txt = {
             free: "Klicka längst upp till vänster för att spela!",
@@ -106,9 +120,10 @@ var Home = React.createClass({
             getready: "Är du beredd...?",
             playing: s.active && "Vad blir "+s.active.replace("_","⋅")+"?",
             didwrong: "Ack, fel!! :(",
-            won: "Du kan allt mellan "+s.low+" och "+s.high+"! Grattis!"
+            won: "Du kan allt mellan "+s.low+" och "+s.high+"! Grattis!",
+            lost: "Tiden är ute! Sorry!"
         }[s.mode];
-        var ingame = {playing:1,getready:1,won:1,didwrong:1,didright:1}[s.mode];
+        var ingame = {playing:1,getready:1,won:1,didwrong:1,didright:1,lost:1}[s.mode];
         var s=this.state, squares = _.reduce(_.range(0,data.total+1),function(arr,row){
             return _.reduce(_.range(0,data.total+1),function(arr,col){
                 var ans = row*col,
@@ -142,6 +157,7 @@ var Home = React.createClass({
                             <input type="number" ref="field"></input>
                         </form>
                     </span>
+                    {ingame && s.mode!=="getready" && s.mode!=="won" && s.mode!=="lost" ? <Timer callback={this.timeOut.bind(this,this.state.finishat)} endat={this.state.finishat} /> : ''}
                 </div>
             </div>
         );
