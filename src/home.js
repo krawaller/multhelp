@@ -52,7 +52,7 @@ var Home = React.createClass({
             },function(){
                 setTimeout(function(){
                     this.setState({
-                        finishat: Date.now()+this.state.remaining.length*2000
+                        finishat: Date.now()+this.state.remaining.length*2500
                     });
                     this.pickNext();
                 }.bind(this),3000);
