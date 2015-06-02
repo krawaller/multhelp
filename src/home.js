@@ -109,7 +109,7 @@ var Home = React.createClass({
     },
     timeOut: function(time) {
         if (this.state.mode!=="won" && time===this.state.finishat){
-            this.setState({mode:"lost"});
+            this.setState({mode:"lost",active:0});
         }
     },
     render: function() {

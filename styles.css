@@ -237,6 +237,7 @@ body {
 
 .input {
 	display: none;
+	margin: 0 1em;
 }
 
 .playing .input, .getready .input, .didwrong .input {
